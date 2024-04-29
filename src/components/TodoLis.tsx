@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { GiAnimalSkull } from "react-icons/gi";
+import { GiAnimalSkull } from 'react-icons/gi';
 import { FaBiohazard } from 'react-icons/fa';
 import { FC } from 'react';
 import styled from 'styled-components';
@@ -22,6 +22,15 @@ const ButtonBtn2 = styled.button`
     border-radius: 5px;
     width: 279px;
     height: 30px;
+    cursor: pointer;
+    touch-action: manipulation;
+    :hover {
+        background-color: #c2d6f0;
+    }
+    :active {
+        box-shadow: 0 1px 2px 0 rgb(26 115 232 / 45%), 0 2px 6px 2px rgb(26 115 232 / 30%);
+        background-color: #1a73e8 !important;
+    }
 `;
 const Input2 = styled.input`
     border: 2px solid rgb(51, 53, 175);
@@ -36,8 +45,7 @@ const Input3 = styled.input`
     height: max-content;
 `;
 const InputValueConteiner = styled.p`
-    overflow: hidden;
-    text-overflow: ellipsis;
+    word-break: break-all;
 `;
 type TodoList = {
     id: string;
@@ -79,9 +87,13 @@ const TodoLis: FC<TodoList> = ({ id, title, completed, deleteEL, ResTask, ResChe
             )}
             <>
                 {isEditing ? (
-                    <ButtonBtn2 onClick={handleSaveClick}>Save <GiAnimalSkull /></ButtonBtn2>
+                    <ButtonBtn2 onClick={handleSaveClick}>
+                        Save <GiAnimalSkull />
+                    </ButtonBtn2>
                 ) : (
-                    <ButtonBtn2 onClick={handleEditClick}>Edit <FaBiohazard /></ButtonBtn2>
+                    <ButtonBtn2 onClick={handleEditClick}>
+                        Edit <FaBiohazard />
+                    </ButtonBtn2>
                 )}
             </>
             <ButtonBtn2 onClick={() => deleteEL(id)}>Delete</ButtonBtn2>

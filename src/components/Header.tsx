@@ -1,8 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { Dudu } from './types';
-import { v4 as uuidv4 } from 'uuid';
 import TodoLis from './TodoLis';
+import InputValue from './InputValue';
 
 const HeaderFunc = styled.div`
     display: grid;
@@ -13,36 +13,36 @@ const HeaderFunc = styled.div`
     width: fit-content;
     height: fit-content;
 `;
-const FormBtn = styled.form`
-    grid-column: span 3;
-    display: flex;
-    gap: 10px;
-`;
 const ButtonBtn = styled.button`
     border: 2px solid rgb(51, 53, 175);
     border-radius: 5px;
     width: 180px;
     height: 40px;
+    cursor: pointer;
+    touch-action: manipulation;
+    :hover {
+        background-color: #c2d6f0;
+    }
+    :active {
+        box-shadow: 0 1px 2px 0 rgb(26 115 232 / 45%), 0 2px 6px 2px rgb(26 115 232 / 30%);
+        background-color: #1a73e8 !important;
+    }
+    :focus {
+        box-shadow: 0 1px 2px 0 rgb(26 115 232 / 45%), 0 2px 6px 2px rgb(26 115 232 / 30%);
+        background-color: #1a73e8;
+    }
 `;
-const Input1 = styled.input`
-    border: 2px solid rgb(51, 53, 175);
-    border-radius: 5px;
-    width: max-content;
-    width: 360px;
-`;
-
-function FilterTasks(Tasks: any, filter: any) {
+function FilterTasks(Tasks: Dudu[], filter: string) {
     if (filter === 'all') {
         return Tasks;
     } else if (filter === 'completed') {
-        return Tasks.filter((el: any) => el.completed);
+        return Tasks.filter((el: Dudu) => el.completed);
     } else {
-        return Tasks.filter((el: any) => !el.completed);
+        return Tasks.filter((el: Dudu) => !el.completed);
     }
 }
 
 function Header() {
-    const [inputValue, setInputValue] = useState('');
     const [task, setTask] = useState<Dudu[]>(JSON.parse(localStorage.getItem('ToDoShka') || '[]'));
     const [filter, setFilter] = useState('all');
 
@@ -68,7 +68,7 @@ function Header() {
         localStorage.setItem('ToDoShka', JSON.stringify(res));
     };
     const ResCheck = (id: string, completed: boolean) => {
-        const ref =task.map((el) => {
+        const ref = task.map((el) => {
             if (el.id === id) {
                 return {
                     ...el,
@@ -83,7 +83,7 @@ function Header() {
     };
 
     const todoelement = useMemo(() => {
-        return filteredTasks.map((el: any) => (
+        return filteredTasks.map((el: Dudu) => (
             <TodoLis
                 key={el.id}
                 id={el.id}
@@ -95,14 +95,7 @@ function Header() {
             />
         ));
     }, [filteredTasks, deleteEL, ResTask]);
-    const handleSubmit = (event: any) => {
-        event.preventDefault();
-        const sasa = [...task, { title: inputValue, id: uuidv4(), completed: false }];
-        setTask(sasa);
 
-        setInputValue('');
-        localStorage.setItem('ToDoShka', JSON.stringify(sasa));
-    };
     const handleAllTasks = () => {
         setFilter('all');
     };
@@ -114,27 +107,23 @@ function Header() {
         setFilter('completed');
     };
     const tasksLenghth = () => {
-        return todoelement.length < 2 ? 'Мало дел:' : 'Многа дел:';
+        return todoelement.length < 2
+            ? `Мало дел: ${todoelement.length} `
+            : `Многа дел: ${todoelement.length} `;
+    };
+    const taskNull = () => {
+        return todoelement.length === 0 ? 'Придумай себе дела' : todoelement;
     };
     return (
         <div>
             <HeaderFunc>
-                <FormBtn onSubmit={handleSubmit}>
-                    <Input1
-                        type='text'
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                    />
-                    <ButtonBtn type='submit'>Add</ButtonBtn>
-                </FormBtn>
+                <InputValue task={task} setTask={setTask} />
                 <ButtonBtn onClick={handleAllTasks}>Show All Tasks</ButtonBtn>
                 <ButtonBtn onClick={handleActiveTasks}>Show Active Tasks</ButtonBtn>
                 <ButtonBtn onClick={handleCompliteTasks}>Show completed Tasks</ButtonBtn>
             </HeaderFunc>
-            <div>
-                {tasksLenghth()} {todoelement.length}
-            </div>
-            <div>{todoelement}</div>
+            <div>{tasksLenghth()}</div>
+            <div>{taskNull()}</div>
         </div>
     );
 }
