@@ -3,3 +3,8 @@ export type Dudu ={
     title: string;
     completed: boolean;
 }
+export enum filterTask {
+    All  = 'all',
+    DONE = 'completed',
+    NOTDONE='notcompleted'
+}

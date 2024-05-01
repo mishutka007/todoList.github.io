@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Dudu } from './types';
 import TodoLis from './TodoLis';
 import InputValue from './InputValue';
-
+import { filterTask } from './types';
 const HeaderFunc = styled.div`
     display: grid;
     grid-template-columns: auto auto auto;
@@ -32,10 +32,10 @@ const ButtonBtn = styled.button`
         background-color: #1a73e8;
     }
 `;
-function FilterTasks(Tasks: Dudu[], filter: string) {
-    if (filter === 'all') {
+function FilterTasks(Tasks: Dudu[], filter: filterTask) {
+    if (filter === filterTask.All) {
         return Tasks;
-    } else if (filter === 'completed') {
+    } else if (filter === filterTask.DONE) {
         return Tasks.filter((el: Dudu) => el.completed);
     } else {
         return Tasks.filter((el: Dudu) => !el.completed);
@@ -44,7 +44,7 @@ function FilterTasks(Tasks: Dudu[], filter: string) {
 
 function Header() {
     const [task, setTask] = useState<Dudu[]>(JSON.parse(localStorage.getItem('ToDoShka') || '[]'));
-    const [filter, setFilter] = useState('all');
+    const [filter, setFilter] = useState(filterTask.All);
 
     const filteredTasks = FilterTasks(task, filter);
 
@@ -109,21 +109,21 @@ function Header() {
                 <InputValue task={task} setTask={setTask} />
                 <ButtonBtn
                     onClick={() => {
-                        setFilter('all');
+                        setFilter(filterTask.All);
                     }}
                 >
                     Show All Tasks
                 </ButtonBtn>
                 <ButtonBtn
                     onClick={() => {
-                        setFilter('notcompleted');
+                        setFilter(filterTask.NOTDONE);
                     }}
                 >
                     Show Active Tasks
                 </ButtonBtn>
                 <ButtonBtn
                     onClick={() => {
-                        setFilter('completed');
+                        setFilter(filterTask.DONE);
                     }}
                 >
                     Show completed Tasks
