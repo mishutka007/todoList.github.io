@@ -95,17 +95,6 @@ function Header() {
             />
         ));
     }, [filteredTasks, deleteEL, ResTask]);
-
-    const handleAllTasks = () => {
-        setFilter('all');
-    };
-    const handleActiveTasks = () => {
-        setFilter('notcompleted');
-    };
-
-    const handleCompliteTasks = () => {
-        setFilter('completed');
-    };
     const tasksLenghth = () => {
         return todoelement.length < 2
             ? `Мало дел: ${todoelement.length} `
@@ -118,9 +107,27 @@ function Header() {
         <div>
             <HeaderFunc>
                 <InputValue task={task} setTask={setTask} />
-                <ButtonBtn onClick={handleAllTasks}>Show All Tasks</ButtonBtn>
-                <ButtonBtn onClick={handleActiveTasks}>Show Active Tasks</ButtonBtn>
-                <ButtonBtn onClick={handleCompliteTasks}>Show completed Tasks</ButtonBtn>
+                <ButtonBtn
+                    onClick={() => {
+                        setFilter('all');
+                    }}
+                >
+                    Show All Tasks
+                </ButtonBtn>
+                <ButtonBtn
+                    onClick={() => {
+                        setFilter('notcompleted');
+                    }}
+                >
+                    Show Active Tasks
+                </ButtonBtn>
+                <ButtonBtn
+                    onClick={() => {
+                        setFilter('completed');
+                    }}
+                >
+                    Show completed Tasks
+                </ButtonBtn>
             </HeaderFunc>
             <div>{tasksLenghth()}</div>
             <div>{taskNull()}</div>
