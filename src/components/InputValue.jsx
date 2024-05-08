@@ -1,18 +1,18 @@
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
-const FormBtn = styled.form`
+const FormTask = styled.form`
     grid-column: span 3;
     display: flex;
     gap: 10px;
 `;
-const Input1 = styled.input`
+const InputValueTask = styled.input`
     border: 2px solid rgb(51, 53, 175);
     border-radius: 5px;
     width: max-content;
     width: 360px;
 `;
-const ButtonBtn3 = styled.button`
+const ButtonSendForm = styled.button`
     border: 2px solid rgb(51, 53, 175);
     border-radius: 5px;
     width: 180px;
@@ -43,15 +43,15 @@ function InputValue({ task, setTask }) {
         localStorage.setItem('ToDoShka', JSON.stringify(addTask));
     };
     return (
-        <FormBtn onSubmit={handleSubmit}>
-            <Input1
+        <FormTask onSubmit={handleSubmit}>
+            <InputValueTask
                 type='text'
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 required
             />
-            <ButtonBtn3 type='submit'>Add</ButtonBtn3>
-        </FormBtn>
+            <ButtonSendForm type='submit'>Add</ButtonSendForm>
+        </FormTask>
     );
 }
 

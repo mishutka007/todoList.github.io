@@ -17,7 +17,7 @@ const CheckList = styled.div`
     margin-top: 20px;
     align-items: center;
 `;
-const ButtonBtn2 = styled.button`
+const ButtonHandleClick = styled.button`
     border: 2px solid rgb(51, 53, 175);
     border-radius: 5px;
     width: 279px;
@@ -32,13 +32,13 @@ const ButtonBtn2 = styled.button`
         background-color: #1a73e8 !important;
     }
 `;
-const Input2 = styled.input`
+const InputCheckbox = styled.input`
     border: 2px solid rgb(51, 53, 175);
     border-radius: 5px;
     width: 45px;
     height: 45px;
 `;
-const Input3 = styled.input`
+const InputText = styled.input`
     border: 2px solid rgb(157, 158, 236, 0.2);
     border-radius: 5px;
     width: max-content;
@@ -47,58 +47,58 @@ const Input3 = styled.input`
 const InputValueConteiner = styled.p`
     word-break: break-all;
 `;
-type TodoList = {
+type Todo = {
     id: string;
     title: string;
     completed: boolean;
     deleteEL: (id: string) => void;
-    ResTask: (id: string, title: string) => void;
-    ResCheck: (id: string, completed: boolean) => void;
+    resTask: (id: string, title: string) => void;
+    resCheck: (id: string, completed: boolean) => void;
 };
 
-const TodoLis: FC<TodoList> = ({ id, title, completed, deleteEL, ResTask, ResCheck }) => {
+const Todo: FC<Todo> = ({ id, title, completed, deleteEL, resTask, resCheck }) => {
     const [isEditing, setIsEditing] = useState(false);
-    const [input2Value, setInput2Value] = useState(title);
-    const [complete, setComplete] = useState(completed);
+    const [inputTextValue, setInputTextValue] = useState(title);
+    const [isComplete, setIsComplete] = useState(completed);
     const handleEditClick = () => {
         setIsEditing(true);
     };
 
     const handleSaveClick = () => {
-        ResTask(id, input2Value);
+        resTask(id, inputTextValue);
         setIsEditing(false);
     };
     const handleChange = () => {
-        setComplete(!complete);
-        ResCheck(id, !complete);
+        setIsComplete(!isComplete);
+        resCheck(id, !isComplete);
     };
 
     return (
         <CheckList>
-            <Input2 type='checkbox' defaultChecked={complete} onClick={handleChange}></Input2>
+            <InputCheckbox type='checkbox' defaultChecked={isComplete} onClick={handleChange}></InputCheckbox>
             {isEditing ? (
-                <Input3
+                <InputText
                     type='text'
-                    value={input2Value}
-                    onChange={(e) => setInput2Value(e.target.value)}
+                    value={inputTextValue}
+                    onChange={(e) => setInputTextValue(e.target.value)}
                 />
             ) : (
-                <InputValueConteiner>{input2Value}</InputValueConteiner>
+                <InputValueConteiner>{inputTextValue}</InputValueConteiner>
             )}
             <>
                 {isEditing ? (
-                    <ButtonBtn2 onClick={handleSaveClick}>
+                    <ButtonHandleClick onClick={handleSaveClick}>
                         Save <GiAnimalSkull />
-                    </ButtonBtn2>
+                    </ButtonHandleClick>
                 ) : (
-                    <ButtonBtn2 onClick={handleEditClick}>
+                    <ButtonHandleClick onClick={handleEditClick}>
                         Edit <FaBiohazard />
-                    </ButtonBtn2>
+                    </ButtonHandleClick>
                 )}
             </>
-            <ButtonBtn2 onClick={() => deleteEL(id)}>Delete</ButtonBtn2>
+            <ButtonHandleClick onClick={() => deleteEL(id)}>Delete</ButtonHandleClick>
         </CheckList>
     );
 };
 
-export default TodoLis;
+export default Todo;

@@ -1,5 +1,5 @@
 // import React from 'react';
-import Header from './components/Header';
+import Todolist from './components/Todolist';
 import styled from 'styled-components';
 const AppCont = styled.div`
     display: flex;
@@ -12,7 +12,7 @@ function App() {
     return (
         <AppCont>
             <div>TODOLIST</div>
-            <Header />
+            <Todolist />
         </AppCont>
     );
 }

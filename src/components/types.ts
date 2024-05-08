@@ -1,10 +1,10 @@
-export type Dudu ={
+export type Tasks = {
     id: string;
     title: string;
     completed: boolean;
-}
+};
 export enum filterTask {
-    All  = 'all',
+    All = 'all',
     DONE = 'completed',
-    NOTDONE='notcompleted'
+    NOTDONE = 'notcompleted',
 }
